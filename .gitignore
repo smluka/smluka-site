@@ -1,0 +1,30 @@
+.DS_Store
+.claude/
+
+# Raw, full-resolution source photos are kept on disk but not tracked here —
+# the site only loads the resized copies in each work's images/<name>/web/
+# subfolder (plus a few already-small files referenced directly).
+images/PIMPS/*
+!images/PIMPS/web
+
+images/bar cart/*
+!images/bar cart/web
+!images/bar cart/bar cart hover-web.jpg
+
+images/domestic daydreams/*
+!images/domestic daydreams/web
+
+images/dutch design week/*
+!images/dutch design week/web
+
+images/graduation show/*
+!images/graduation show/web
+
+images/just another room/*
+!images/just another room/web
+
+images/limbo lounge/*
+!images/limbo lounge/web
+
+images/small scale commons/*
+!images/small scale commons/web

@@ -1,0 +1,316 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap');
+
+:root{
+  --paper: #dfdfdf;
+  --ink: #1c1a17;
+  --blush: #fdf2f1;
+  --link: #5f63c9;
+}
+
+*{ box-sizing: border-box; }
+
+html, body{
+  margin:0;
+  padding:0;
+  height:100%;
+  overflow:hidden;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'DM Mono', monospace;
+}
+
+a{ color:var(--ink); text-decoration:none; text-decoration-color:var(--ink); }
+a{
+  display:inline-block;
+  transform-origin:center;
+  transition:transform 0.18s ease;
+}
+a:hover, a:focus-visible{ text-decoration:underline; text-decoration-color:var(--link); }
+a:focus-visible{ outline:2px solid var(--link); outline-offset:3px; }
+
+/* ---------- title font (used for work titles + accents) ---------- */
+.title-font{
+  font-family:'DM Mono', monospace;
+  font-weight:500;
+}
+
+/* ---------- shared text ---------- */
+.mono-text{ font-family:'DM Mono', monospace; }
+
+/* ---------- text groups (shared hooks for cross-cutting styling) ----------
+   group-label: category labels (works / "real" stuff / workshops / ...)
+   group-title: page/work titles (e.g. "limbo lounge" heading)
+   group-body:  paragraph / description text
+   group-link:  every clickable text link (works list items, home/about
+                nav, contact block) -- treated as one group per request
+------------------------------------------------------------------------ */
+.group-label{ font-size:14px; }
+.group-title{ font-size:18px; }
+.group-body{ font-size:16px; }
+.group-link{ font-size:16px; }
+
+/* ---------- three-column site layout ---------- */
+.site-layout{
+  display:grid;
+  grid-template-columns: 224px 916px 224px;
+  grid-template-rows: 100vh;
+  gap:16px;
+  justify-content:center;
+  min-width:1396px;
+  width:100%;
+  padding:0;
+  align-items:stretch;
+  height:100vh;
+}
+.col-left{
+  width:224px;
+  box-sizing:border-box;
+  height:100%;
+  background:#f6f6f6;
+  box-shadow: 9999px 0 0 9999px #f6f6f6, -9999px 0 0 9999px #f6f6f6;
+}
+.col-left-scroll{
+  width:100%;
+  height:100%;
+  padding-top:48px;
+  padding-bottom:80px;
+  padding-left:0;
+  padding-right:0;
+  box-sizing:border-box;
+  overflow-y:auto;
+  scrollbar-color: #d4d4d4 transparent;
+  scrollbar-width: thin;
+}
+.col-left-scroll::-webkit-scrollbar{ width:8px; }
+.col-left-scroll::-webkit-scrollbar-track{ background:transparent; }
+.col-left-scroll::-webkit-scrollbar-thumb{ background:#d4d4d4; border-radius:4px; min-height:50px; max-height:50px; }
+.col-middle{
+  min-width:0;
+  padding-left:32px;
+  padding-right:32px;
+  padding-top:48px;
+  padding-bottom:80px;
+  box-sizing:border-box;
+  height:100%;
+  overflow-y:auto;
+  background:#ffffff;
+}
+.col-right{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  box-sizing:border-box;
+  padding-left:0;
+  padding-right:0;
+  padding-top:48px;
+  padding-bottom:80px;
+  overflow:visible;
+}
+.side-links{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:16px;
+  margin-top:auto;
+  margin-bottom:24px;
+}
+.contact-block{
+}
+.contact-block a{
+  text-decoration:underline;
+  text-decoration-color:var(--ink);
+}
+
+@media (max-width: 1396px){
+  html, body{
+    height:auto;
+    overflow:visible;
+  }
+  .site-layout{
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    justify-content:stretch;
+    min-width:0;
+    gap:40px;
+    padding:32px 24px 60px;
+    height:auto;
+  }
+  .col-left{ order:2; height:auto; overflow:visible; width:auto; }
+  .col-left-scroll{ height:auto; overflow:visible; }
+  .col-middle{ order:1; height:auto; overflow:visible; border-left:none; border-right:none; padding-left:0; padding-right:0; }
+  .col-right{ height:auto; overflow:visible; order:3; padding:0; }
+}
+
+/* ---------- works list ---------- */
+.works-label{
+  opacity:0.7;
+  text-align:right;
+  margin:32px 0 24px;
+  padding-right:10px;
+}
+.works-label:first-child{ margin-top:0; }
+.works-label.site-title{ text-align:left; margin-bottom:48px; }
+
+/* ---------- category text (reusable, non-works-list contexts) ---------- */
+.category-label{ opacity:0.7; }
+a.works-item{
+  display:block;
+  width:fit-content;
+  margin:8px 0;
+}
+.works-preview{
+  position:fixed;
+  width:140px;
+  height:auto;
+  background:#cfcfcf;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.15s ease;
+  z-index:50;
+}
+.works-preview.is-visible{ opacity:1; }
+
+/* ---------- juxtaposed gallery row (3 across, uniform crop) ---------- */
+.gallery-row{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:8px;
+  max-width:786px;
+  margin:0 auto 24px;
+}
+.gallery-row img,
+.gallery-row .gallery-placeholder{
+  display:block;
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  background:#cfcfcf;
+}
+
+/* ---------- juxtaposed gallery row, 3 across, portrait crop ---------- */
+.gallery-row-portrait{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:8px;
+  max-width:786px;
+  margin:0 auto 24px;
+}
+.gallery-row-portrait img{
+  display:block;
+  width:100%;
+  aspect-ratio:2/3;
+  object-fit:cover;
+  background:#cfcfcf;
+}
+.gallery-row-portrait.cols-2{ grid-template-columns: repeat(2, 1fr); }
+
+/* ---------- vertical photo zoom (click to view full-size, uncropped) ---------- */
+img.is-zoomable{ cursor:zoom-in; }
+.photo-zoom-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0, 0, 0, 0.85);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px;
+  box-sizing:border-box;
+  z-index:1000;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.2s ease;
+}
+.photo-zoom-overlay.is-open{ opacity:1; pointer-events:auto; }
+.photo-zoom-overlay img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+  cursor:zoom-out;
+}
+
+/* ---------- juxtaposed gallery flow (natural proportions, wraps 2-3 per row) ---------- */
+.gallery-flow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  max-width:786px;
+  margin:24px auto;
+}
+.gallery-flow img{
+  display:block;
+  height:240px;
+  width:auto;
+}
+
+/* ---------- hero slideshow ---------- */
+.slideshow{ background:#cfcfcf; position:relative; }
+.slide{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:opacity 0.7s ease;
+}
+.slide.is-active{ opacity:1; }
+
+.slide-zone{
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:18%;
+  border:none;
+  background:transparent;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+}
+.slide-zone.prev{ left:0; justify-content:flex-start; padding-left:16px; }
+.slide-zone.next{ right:0; justify-content:flex-end; padding-right:16px; }
+
+.slide-zone span{
+  width:32px; height:32px;
+  border-radius:14px;
+  border:none;
+  background:none;
+  display:flex; align-items:center; justify-content:center;
+  color:#ffffff;
+  opacity:0;
+  transition:opacity 0.2s ease;
+}
+.slide-zone span svg{ display:block; }
+.slide-zone:hover span, .slide-zone:focus-visible span{
+  opacity:1;
+}
+
+/* ---------- dev grid overlay (not part of design, press "g" to toggle) ---------- */
+.grid-overlay{
+  display:none;
+  position:absolute;
+  inset:0;
+  z-index:9999;
+  pointer-events:none;
+}
+.grid-label{
+  position:absolute;
+  font-family:'DM Mono', monospace;
+  font-size:11px;
+  color:#e0005a;
+}
+.grid-label-x{ top:2px; transform:translateX(2px); }
+.grid-label-y{ left:2px; transform:translateY(2px); }
+.grid-readout{
+  display:none;
+  position:fixed;
+  left:12px;
+  bottom:12px;
+  z-index:9999;
+  font-family:'DM Mono', monospace;
+  font-size:12px;
+  background:#1c1a17;
+  color:#fdf2f1;
+  padding:4px 8px;
+  border-radius:6px;
+  pointer-events:none;
+}
