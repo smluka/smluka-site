@@ -138,6 +138,7 @@ a:focus-visible{ outline:2px solid var(--link); outline-offset:3px; }
   .col-left-scroll{ height:auto; overflow:visible; padding-left:24px; padding-right:24px; }
   .col-middle{ order:1; height:auto; overflow:visible; border-left:none; border-right:none; margin:0; padding-left:24px; padding-right:24px; }
   .col-right{ height:auto; overflow:visible; order:3; padding:32px 24px; }
+  .side-links{ margin-top:48px; }
 }
 
 /* ---------- works list ---------- */
