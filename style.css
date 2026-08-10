@@ -127,15 +127,14 @@ a:focus-visible{ outline:2px solid var(--link); outline-offset:3px; }
     overflow:visible;
   }
   .site-layout{
-    grid-template-columns: 1fr;
-    grid-template-rows: none;
-    justify-content:stretch;
+    display:flex;
+    flex-direction:column;
     min-width:0;
     gap:40px;
     padding:32px 24px 60px;
     height:auto;
   }
-  .col-left{ order:2; height:auto; overflow:visible; width:auto; }
+  .col-left{ order:2; height:auto; overflow:visible; width:auto; box-shadow:none; }
   .col-left-scroll{ height:auto; overflow:visible; }
   .col-middle{ order:1; height:auto; overflow:visible; border-left:none; border-right:none; padding-left:0; padding-right:0; }
   .col-right{ height:auto; overflow:visible; order:3; padding:0; }
